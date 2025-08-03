@@ -1,7 +1,7 @@
 
 # Create shared folder and test file
 New-Item -ItemType Directory -Path "C:\CrushFTP\shared" -Force
-Set-Content -Path "C:\CrushFTP\shared\test.txt" -Value "Test file for John and Bob"
+Set-Content -Path "C:\CrushFTP\shared\test.txt" -Value "Welcome to the Test file for John and Bob"
 
 
 # Allow HTTPS 
@@ -9,6 +9,9 @@ New-NetFirewallRule -DisplayName "CrushFTP HTTPS" -Direction Inbound -Protocol T
 
 # Allow HTTP temporiraly so that letsencrypt can verify the domain
 New-NetFirewallRule -DisplayName "CrushFTP HTTP" -Direction Inbound -Protocol TCP -LocalPort 80 -Action Allow
+
+# Allow SSH on 22
+New-NetFirewallRule -DisplayName "CrushFTP SSH" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow
 
 
 # Download and unzip CrushFTP
