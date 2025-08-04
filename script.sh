@@ -24,4 +24,4 @@ az storage blob upload --account-name $ACCOUNT_NAME --container-name $CONTAINER_
 
 # deploy resources
 echo "DEPLOYING RESOURCES"
-az deployment group create --name main --template-file main.bicep --parameters adminPassword="YourStrongPass" storageAccount=$ACCOUNT_NAME storageContainer=$CONTAINER_NAME
+az deployment group create --name main --template-file main.bicep --parameters adminPassword="YourStrongPass" storageAccount=$ACCOUNT_NAME storageContainer=$CONTAINER_NAME bobIP='' johnIP=''

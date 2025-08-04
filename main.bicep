@@ -5,6 +5,8 @@ param adminPassword string
 param storageAccount string
 param storageContainer string
 param dnsLabelPrefix string = 'cloudforcetask'
+param johnIP string
+param bobIp string
 
 var addressPrefix = '172.16.0.0/24'
 var subnetPrefix = '172.16.0.0/28'
@@ -51,7 +53,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
           direction: 'Inbound'
           access: 'Allow'
           protocol: 'Tcp'
-          sourceAddressPrefix: '71.126.187.142'
+          sourceAddressPrefix: johnIP
           destinationPortRange: '3389'
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
@@ -64,7 +66,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
           direction: 'Inbound'
           access: 'Allow'
           protocol: 'Tcp'
-          sourceAddressPrefix: '71.126.187.142'
+          sourceAddressPrefix: johnIP
           destinationPortRange: '22'
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
@@ -77,20 +79,20 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
           direction: 'Inbound'
           access: 'Allow'
           protocol: 'Tcp'
-          sourceAddressPrefix: '20.102.88.207'
+          sourceAddressPrefix: bobIp
           destinationPortRange: '22'
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
         }
       }
       {
-        name: 'Allow-HTTPS-Access-John'
+        name: 'Allow-HTTPS-Access'
         properties: {
           priority: 130
           direction: 'Inbound'
           access: 'Allow'
           protocol: 'Tcp'
-          sourceAddressPrefix: '71.126.187.142'
+          sourceAddressPrefix: '*'
           destinationPortRange: '443'
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
