@@ -6,7 +6,7 @@ param storageAccount string
 param storageContainer string
 param dnsLabelPrefix string = 'cloudforcetask'
 param johnIP string
-param bobIp string
+param bobIP string
 
 var addressPrefix = '172.16.0.0/24'
 var subnetPrefix = '172.16.0.0/28'
@@ -79,7 +79,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2024-07-01' = {
           direction: 'Inbound'
           access: 'Allow'
           protocol: 'Tcp'
-          sourceAddressPrefix: bobIp
+          sourceAddressPrefix: bobIP
           destinationPortRange: '22'
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
