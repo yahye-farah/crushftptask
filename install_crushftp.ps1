@@ -1,3 +1,7 @@
+# Install Chocolatey and Java
+Set-ExecutionPolicy Bypass -Scope Process -Force
+Invoke-WebRequest https://community.chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
+choco install jre8 -y
 
 # Create shared folder and test file
 New-Item -ItemType Directory -Path "C:\CrushFTP\shared" -Force
