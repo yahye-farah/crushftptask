@@ -1,12 +1,14 @@
 param location string = resourceGroup().location
+var storageResourceGroup = resourceGroup().name
 param adminUsername string = 'crushftp'
 @secure()
 param adminPassword string
-param storageAccount string
-param storageContainer string
+param storageAccountName string
 param dnsLabelPrefix string = 'cloudforcetask'
+param encodedScript string
 param johnIP string
 param bobIP string
+
 
 var addressPrefix = '172.16.0.0/24'
 var subnetPrefix = '172.16.0.0/28'
@@ -15,8 +17,6 @@ var publicIpName = 'crushftp-ip'
 var nsgName = 'crushftp-nsg'
 var nicName = 'crushftp-nic'
 var vnetName = 'crushftp-vnet'
-var scriptFileName = 'install-crushftp.ps1'
-var blobEndpoint = 'https://${storageAccount}.blob.${environment().suffixes.storage}'
 
 
 
@@ -140,6 +140,9 @@ resource nic 'Microsoft.Network/networkInterfaces@2024-07-01' = {
 resource vm 'Microsoft.Compute/virtualMachines@2024-07-01' = {
   name: vmName
   location: location
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     hardwareProfile: {
       vmSize: 'Standard_B2s'
@@ -170,6 +173,22 @@ resource vm 'Microsoft.Compute/virtualMachines@2024-07-01' = {
   }
 }
 
+resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
+  name: storageAccountName
+  scope: resourceGroup(storageResourceGroup)
+}
+
+// Role assignment for blob access
+module assignBlobReader './role-assignment.bicep' = {
+  name: 'assignBlobReaderRole'
+  scope: resourceGroup(resourceGroup().name)
+  params: {
+    principalId: vm.identity.principalId
+    storageAccountName: storageAccount.name
+  }
+}
+
+
 resource scriptExt 'Microsoft.Compute/virtualMachines/extensions@2024-07-01' = {
   parent: vm
   name: 'InstallCrushFTP'
@@ -180,10 +199,8 @@ resource scriptExt 'Microsoft.Compute/virtualMachines/extensions@2024-07-01' = {
     typeHandlerVersion: '1.10'
     autoUpgradeMinorVersion: true
     settings: {
-      fileUris: [
-        '${blobEndpoint}/${storageContainer}/${scriptFileName}'
-      ]
-      commandToExecute: 'powershell -ExecutionPolicy Unrestricted -File install-crushftp.ps1'
+      fileUris: []
+      commandToExecute: 'powershell -EncodedCommand ${encodedScript}'
     }
   }
 }
