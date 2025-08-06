@@ -30,6 +30,6 @@ Expand-Archive "C:\CrushFTP\win-acme.zip" -DestinationPath "C:\CrushFTP\win-acme
 # Run CrushFTP
 java -jar 'C:\CrushFTP\CrushFTP9\CrushFTP.jar' -d
 
-# @TODO Create admin user CrushFTP API USER using their API INSTEAD OF USING RDB
+# @TODO Create admin user CrushFTP API USER using their API INSTEAD OF USING RDP
 
-# @TODO automate letsencrypt INSTEAD OF RDB
+# @TODO automate letsencrypt INSTEAD OF RDP

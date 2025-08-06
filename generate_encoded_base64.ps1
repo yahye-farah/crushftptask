@@ -6,7 +6,7 @@ param(
     [string]$azPath = "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin"
 )
 
-# Template PowerShell script with parameter injection
+
 $script = @"
 Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile AzureCLI.msi
 Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'
@@ -43,7 +43,6 @@ $encoded = [Convert]::ToBase64String($bytes)
 # Write-Host "---------------------------------------------"
 # Write-Host $encoded
 # Write-Host "---------------------------------------------"
-# Write-Host "`nPaste this in your Bicep template:"
 # Write-Host "powershell -EncodedCommand $encoded"
 
 Write-Output $encoded
