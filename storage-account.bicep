@@ -24,6 +24,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
 resource blobContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
   name: '${storageAccount.name}/default/${containerName}'
   properties: {
-    publicAccess: 'None' // Allows anonymous read access to blobs to dowload install_crushftp.ps1 later on
+    publicAccess: 'None'
   }
 }

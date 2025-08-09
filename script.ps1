@@ -1,7 +1,7 @@
 
 $RESOURCE_GROUP_NAME="crashftp-resource-group"
 
-#Your ipaddress 
+#Set JohnIP and BobIP ->  Your ip in the meantime
 $johnIP = Invoke-RestMethod -Uri 'https://api.ipify.org'
 $bobIP = Invoke-RestMethod -Uri 'https://api.ipify.org'
 
@@ -23,9 +23,9 @@ $CONTAINER_NAME=$(az storage container list --account-name $ACCOUNT_NAME  --quer
 
 
 echo "UPLOADING SCRIPTS INTO STORAGE account_name: $ACCOUNT_NAME and container_name: $CONTAINER_NAME"
-az storage blob upload --account-name $ACCOUNT_NAME --container-name $CONTAINER_NAME  --name  install-crushftp.ps1 --file ./install_crushftp.ps1
+az storage blob upload --account-name $ACCOUNT_NAME --container-name $CONTAINER_NAME  --name  install-crushftp.ps1 --file ./install-crushftp.ps1
 
-$temp = & ./generate_encoded_base64.ps1 `
+$temp = & ./generate-encoded-base64.ps1 `
   -storageAccountName $ACCOUNT_NAME `
   -containerName $CONTAINER_NAME `
   -blobName "install-crushftp.ps1"

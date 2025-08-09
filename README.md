@@ -5,7 +5,7 @@ This repository provides a solution to automate and deploy crushftp into Azure W
 Two users will be created in crushftp to transfter files between them.\
 John will have access on the server over RDP and ssh for file transfer while Bob will only have ssh for the file transfers. \
 Allow bob and john to access server from their ips but it's just assigned to your ip for now but you can change ips as needed. \
-The two users will be able to access the crushftp over https.\
+The two users will be able to access the crushftp over https. \
 
 🌐 Deploys a secure Windows VM in Azure \
 🔐 Uses Managed Identity to securely access Azure Blob Storage \
